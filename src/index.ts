@@ -1,4 +1,5 @@
 import app  from "./app";
+import './database'
 
 const PORT = process.env.PORT || app.get('port')
 
