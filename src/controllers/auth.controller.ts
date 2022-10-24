@@ -10,6 +10,9 @@ export const signup = async (req: Request, res: Response) => {
     password: req.body.password,
     email: req.body.email,
   })
+  // encrypt pass
+  user.password = await user.encryptPassword(user.password)
+  // save user
   const savedUser = await user.save()
   // tokenizing
   const token: string = jwt.sign({_id: savedUser._id}, process.env.TOKEN_SECRET || 'tokenfake')
