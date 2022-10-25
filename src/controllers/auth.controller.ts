@@ -1,7 +1,5 @@
 import { Request, Response } from "express"
 import jwt from 'jsonwebtoken'
-import user from "../models/user"
-
 import User, { IUser } from "../models/user"
 
 export const signup = async (req: Request, res: Response) => {
@@ -39,6 +37,8 @@ export const signin = async (req: Request, res: Response) => {
   res.send("Signin")
 }
 
-export const profile = (req: Request, res: Response) => {
-  res.send("Profile")
+export const profile = async (req: Request, res: Response) => {
+  const user = await User.findById(req.userId, {password: 0} /*don't return password*/)
+  if (!user) return res.status(404).json('No user found')
+  res.json(user)
 }
